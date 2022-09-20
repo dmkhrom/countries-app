@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Label from './styles';
 
-type Props = {
+interface Props {
   label: string;
-  children: JSX.Element;
-};
+  children: ReactNode;
+}
 
 function LabelComponent({ label, children }: Props) {
   return (

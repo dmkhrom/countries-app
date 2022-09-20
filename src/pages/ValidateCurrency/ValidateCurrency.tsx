@@ -2,26 +2,36 @@ import { useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { COUNTRIES_QUERY } from '../../graphql/queries';
 import { ErrorHint, Wrapper } from './styles';
-import SelectComponent from './Select/Select';
+import SelectComponent from '../../components/Select';
 import { CountriesData, Country, HintProps } from './types';
-import {
-  CURRENCY_CODE_LENGTH,
-  DEFAULT_SELECT_VALUE,
-  HINTS,
-  STORAGE_KEYS,
-} from '../../constants';
-import InputComponent from './Input/Input';
+import InputComponent from '../../components/Input';
 import persistDataServices from '../../services';
+import { StorageKey } from '../../types';
+
+export const HINTS = {
+  error: {
+    show: true,
+    type: 'error',
+    text: 'Currency does not match the country selected. Please correct',
+  },
+  confirmed: {
+    show: true,
+    type: 'confirmed',
+    text: 'Right currency code',
+  },
+};
+
+export const CURRENCY_CODE_LENGTH = 3;
 
 function CurrencyValidation() {
   const { setToStorage, getStorageValue } = persistDataServices();
 
   const [countriesData, setCountriesData] = useState<Array<Country>>([]);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(
-    getStorageValue<Country | null>(STORAGE_KEYS.selectedCountry, null),
+    getStorageValue<Country | null>(StorageKey.selectedCountry, null),
   );
   const [currency, setCurrency] = useState<string>(
-    getStorageValue<string>(STORAGE_KEYS.currency, ''),
+    getStorageValue<string>(StorageKey.currency, ''),
   );
   const [showHint, setShowHint] = useState<HintProps | null>(null);
 
@@ -29,7 +39,7 @@ function CurrencyValidation() {
 
   useEffect(() => {
     if (data) {
-      setCountriesData([DEFAULT_SELECT_VALUE, ...data.countries]);
+      setCountriesData(data.countries);
     }
   }, [data]);
 
@@ -49,9 +59,9 @@ function CurrencyValidation() {
       setShowHint(null);
     }
     const country =
-      countriesData.find((item) => item.code === e.target.value) || null;
+      countriesData.find(({ code }) => code === e.target.value) || null;
 
-    setToStorage<Country | null>(STORAGE_KEYS.selectedCountry, country);
+    setToStorage<Country | null>(StorageKey.selectedCountry, country);
     setSelectedCountry(country);
   };
 
@@ -64,7 +74,7 @@ function CurrencyValidation() {
     }
     if (e.target.value.length === CURRENCY_CODE_LENGTH) {
       validateCurrencyCode(e.target.value);
-      setToStorage<string>(STORAGE_KEYS.currency, e.target.value);
+      setToStorage<string>(StorageKey.currency, e.target.value);
     }
     setCurrency(e.target.value);
   };
@@ -72,9 +82,10 @@ function CurrencyValidation() {
   return (
     <Wrapper>
       <SelectComponent
-        countriesData={countriesData}
-        handleChangeCountry={handleChangeCountry}
-        selectedCountry={selectedCountry}
+        optionsData={countriesData}
+        handleChange={handleChangeCountry}
+        selectedItem={selectedCountry}
+        placeholder="Select country"
       />
       <InputComponent
         currency={currency}

@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface Country {
   code: string;
   name: string;
@@ -14,9 +12,3 @@ export interface Continent {
 export interface ContinentsData {
   continents: Continent[];
 }
-
-export type SelectProps = {
-  selectedContinent: Continent | null;
-  handleChange: (val: React.ChangeEvent<HTMLSelectElement>) => void;
-  continentsData: Array<Continent>;
-};

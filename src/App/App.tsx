@@ -7,7 +7,7 @@ import { Router } from '../router';
 import GlobalStyle from '../globalStyles';
 import { useThemeColorContext } from '../context/ThemeColorMode';
 import client from '../graphql/client';
-import Header from '../components/Header/Header';
+import Header from '../components/Header';
 
 function App() {
   const { theme } = useThemeColorContext();

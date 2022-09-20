@@ -1,4 +1,6 @@
-export const darkTheme = {
+import { DefaultTheme } from 'styled-components';
+
+export const darkTheme: DefaultTheme = {
   background: '#2a2a2c',
   body: '#e0e0e0',
   borderColor: '#4d4d4d',
@@ -8,7 +10,7 @@ export const darkTheme = {
   type: 'lightMode',
 };
 
-export const lightTheme = {
+export const lightTheme: DefaultTheme = {
   background: '#e5e0e0',
   body: '#353736',
   borderColor: '#696969',

@@ -21,8 +21,8 @@ export const CountryTile = styled.div`
   padding: 10px;
   box-sizing: border-box;
   color: #2d2d2d;
-  background-color: ${(props) => props.theme.elementsBackground};
-  border: 1px solid ${(props) => props.theme.borderColor};
+  background-color: ${({ theme }) => theme.elementsBackground};
+  border: 1px solid ${({ theme }) => theme.borderColor};
   border-radius: 5px;
   font-size: 16px;
 `;

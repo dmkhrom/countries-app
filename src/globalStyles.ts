@@ -12,9 +12,9 @@ export default createGlobalStyle`
         margin: 0 auto;
     }
 		body {
-			background: ${(props) => props.theme.background};
+			background: ${({ theme }) => theme.background};
 			font-size: 14px;
-			color: ${(props) => props.theme.text};
+			color: ${({ theme }) => theme.text};
 			font-family: sans-serif;
 		}
  `;

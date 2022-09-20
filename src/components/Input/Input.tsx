@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from './styles';
-import { InputProps } from '../types';
-import LabelComponent from '../../../components/Label/Label';
+import { InputProps } from '../../pages/ValidateCurrency/types';
+import LabelComponent from '../Label/Label';
 
 function InputComponent({ currency, handleChangeCurrency }: InputProps) {
   return (

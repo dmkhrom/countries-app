@@ -1,7 +1,7 @@
 import React from 'react';
 import Wrapper from './styles';
-import Switcher from '../Switcher/Switcher';
-import NavBar from '../NavBar/NavBar';
+import NavBar from '../NavBar';
+import Switcher from '../Switcher';
 
 function Header() {
   return (

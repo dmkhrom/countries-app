@@ -12,7 +12,7 @@ export const CustomLink = styled(NavLink)`
   text-decoration: none;
   font-weight: 600;
   line-height: 16px;
-  color: ${(props) => props.theme.text};
+  color: ${({ theme }) => theme.text};
   margin-right: 26px;
   padding-bottom: 10px;
   opacity: 0.6;
@@ -22,7 +22,7 @@ export const CustomLink = styled(NavLink)`
 
   &.active {
     opacity: 1;
-    border-bottom: 1px solid ${(props) => props.theme.text};
+    border-bottom: 1px solid ${({ theme }) => theme.text};
     cursor: default;
   }
 `;

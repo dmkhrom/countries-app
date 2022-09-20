@@ -1,31 +1,30 @@
 import React, { ChangeEvent } from 'react';
-import { Label, Switch, Input } from './styles';
-import {
-  useThemeColorContext,
-  DARK_MODE_KEY,
-  LIGHT_MODE_KEY,
-} from '../../context/ThemeColorMode';
-import { MODES_NAMES } from '../../constants';
+import { Input, Label, Switch } from './styles';
+import { useThemeColorContext } from '../../context/ThemeColorMode';
+import { ThemeColorMode } from '../../types';
+
+const colorThemeLabels = {
+  [ThemeColorMode.dark]: 'Dark',
+  [ThemeColorMode.light]: 'Light',
+};
 
 function Switcher() {
   const { colorMode, changeColorMode } = useThemeColorContext();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    changeColorMode(e.target.checked ? LIGHT_MODE_KEY : DARK_MODE_KEY);
+    changeColorMode(
+      e.target.checked ? ThemeColorMode.light : ThemeColorMode.dark,
+    );
   };
 
   return (
     <Label>
       <span>
-        {
-          MODES_NAMES[
-            colorMode === LIGHT_MODE_KEY ? DARK_MODE_KEY : LIGHT_MODE_KEY
-          ]
-        }{' '}
-        theme
+        {colorThemeLabels[colorMode]}
+        &nbsp; theme
       </span>
       <Input
-        checked={colorMode === LIGHT_MODE_KEY}
+        checked={colorMode === ThemeColorMode.light}
         type="checkbox"
         onChange={handleChange}
       />

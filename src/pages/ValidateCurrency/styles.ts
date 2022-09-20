@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
-type HintProps = {
+interface HintProps {
   show: boolean | null;
   type: string | null;
-};
+}
 
 export const Wrapper = styled.div`
   display: flex;
@@ -14,6 +14,6 @@ export const Wrapper = styled.div`
 `;
 
 export const ErrorHint = styled.span<HintProps>`
-  visibility: ${(props) => (props.show ? 'visible' : 'hidden')};
-  color: ${(props) => (props.type === 'error' ? 'red' : 'green')};
+  visibility: ${({ show }) => (show ? 'visible' : 'hidden')};
+  color: ${({ type }) => (type === 'error' ? 'red' : 'green')};
 `;

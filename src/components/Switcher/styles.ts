@@ -4,14 +4,14 @@ export const Label = styled.label`
   display: flex;
   gap: 10px;
   cursor: pointer;
-  color: ${(props) => props.theme.text};
+  color: ${({ theme }) => theme.text};
 `;
 
 export const Switch = styled.div`
   position: relative;
   width: 40px;
   height: 22px;
-  background: ${(props) => props.theme.toggleBackground};
+  background: ${({ theme }) => theme.toggleBackground};
   border-radius: 32px;
   padding: 4px;
   transition: 300ms all;
@@ -35,7 +35,7 @@ export const Input = styled.input`
   position: absolute;
 
   &:checked + ${Switch} {
-    background: ${(props) => props.theme.toggleBackground};
+    background: ${({ theme }) => theme.toggleBackground};
     &:before {
       transform: translate(14px, -50%);
     }

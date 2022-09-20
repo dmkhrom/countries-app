@@ -10,21 +10,13 @@ export interface CountriesData {
   countries: Country[];
 }
 
-export type SelectProps = {
-  selectedCountry: Country | null;
-  handleChangeCountry: (
-    selectedCountry: React.ChangeEvent<HTMLSelectElement>,
-  ) => void;
-  countriesData: Array<Country>;
-};
-
-export type InputProps = {
+export interface InputProps {
   currency: string;
   handleChangeCurrency: (currency: React.ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
-export type HintProps = {
+export interface HintProps {
   show: boolean;
   type: string;
   text?: string;
-};
+}

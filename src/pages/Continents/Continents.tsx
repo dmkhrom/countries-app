@@ -2,16 +2,10 @@ import { useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { CONTINENTS_QUERY } from '../../graphql/queries';
 import { CountriesList, CountryTile, Wrapper } from './styles';
-import SelectComponent from './Select/Select';
 import { Continent, ContinentsData, Country } from './types';
 import persistDataServices from '../../services';
-import { STORAGE_KEYS } from '../../constants';
-
-const DEFAULT_VALUE = {
-  code: '',
-  name: 'Select continent',
-  countries: [],
-};
+import { StorageKey } from '../../types';
+import SelectComponent from '../../components/Select/Select';
 
 function Continents() {
   const { setToStorage, getStorageValue } = persistDataServices();
@@ -25,27 +19,28 @@ function Continents() {
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const continent =
-      continentsData.find((item) => item.code === e.target.value) || null;
-    setToStorage<Continent | null>(STORAGE_KEYS.selectedContinent, continent);
+      continentsData.find(({ code }) => code === e.target.value) || null;
+    setToStorage<Continent | null>(StorageKey.selectedContinent, continent);
     setSelectedContinent(continent);
   };
 
   useEffect(() => {
     if (data) {
-      setContinentsData([DEFAULT_VALUE, ...data.continents]);
+      setContinentsData(data.continents);
     }
   }, [data]);
 
   return (
     <Wrapper>
       <SelectComponent
-        continentsData={continentsData}
+        optionsData={continentsData}
         handleChange={handleChange}
-        selectedContinent={selectedContinent}
+        selectedItem={selectedContinent}
+        placeholder="Select continent"
       />
       <CountriesList>
-        {selectedContinent?.countries.map((country: Country) => (
-          <CountryTile key={country.name}>{country.name}</CountryTile>
+        {selectedContinent?.countries.map(({ name, code }: Country) => (
+          <CountryTile key={code}>{name}</CountryTile>
         ))}
       </CountriesList>
     </Wrapper>

@@ -29,6 +29,7 @@ module.exports = {
     ],
     'prettier/prettier': ['error', prettierOptions],
     'no-console': 'error',
+    'no-shadow': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
   },
   settings: {
