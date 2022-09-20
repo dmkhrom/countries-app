@@ -25,7 +25,9 @@ function SelectComponent<T extends Option>({
   return (
     <LabelComponent label={label}>
       <Select onChange={onChange} value={value}>
-        <option disabled>{placeholder}</option>
+        <option disabled value="">
+          {placeholder}
+        </option>
         {options.map(({ code, name }) => (
           <option key={code} value={code}>
             {name}

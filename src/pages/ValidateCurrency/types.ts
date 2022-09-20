@@ -12,8 +12,3 @@ export enum HintType {
   confirmed = 'confirmed',
   error = 'error',
 }
-
-export interface HintProps {
-  type: HintType;
-  text?: string;
-}
