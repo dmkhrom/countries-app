@@ -2,37 +2,27 @@ import { useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { COUNTRIES_QUERY } from '../../graphql/queries';
 import { ErrorHint, Wrapper } from './styles';
-import { SelectComponent } from './Select/Select';
+import SelectComponent from './Select/Select';
 import { CountriesData, Country, HintProps } from './types';
-import { InputComponent } from './Input/Input';
-import { CURRENCY_CODE_LENGTH, DEFAULT_SELECT_VALUE, HINTS } from './constants';
+import {
+  CURRENCY_CODE_LENGTH,
+  DEFAULT_SELECT_VALUE,
+  HINTS,
+  STORAGE_KEYS,
+} from '../../constants';
+import InputComponent from './Input/Input';
+import persistDataServices from '../../services';
 
-export const ValidateCurrency = () => {
-  const getSelectInitialValue = () => {
-    const storageValue = localStorage.getItem('selectedCountry');
-
-    if (storageValue) {
-      return JSON.parse(storageValue);
-    } else {
-      return null;
-    }
-  };
-
-  const getInputInitialValue = () => {
-    const storageValue = localStorage.getItem('currency');
-
-    if (storageValue) {
-      return JSON.parse(storageValue);
-    } else {
-      return '';
-    }
-  };
+function CurrencyValidation() {
+  const { setToStorage, getStorageValue } = persistDataServices();
 
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(
-    getSelectInitialValue(),
+    getStorageValue<Country | null>(STORAGE_KEYS.selectedCountry, null),
   );
   const [countriesData, setCountriesData] = useState<Array<Country>>([]);
-  const [currency, setCurrency] = useState<string>(getInputInitialValue());
+  const [currency, setCurrency] = useState<string>(
+    getStorageValue<string>(STORAGE_KEYS.currency, ''),
+  );
   const [showHint, setShowHint] = useState<HintProps | null>(null);
 
   const { data } = useQuery<CountriesData>(COUNTRIES_QUERY);
@@ -55,27 +45,26 @@ export const ValidateCurrency = () => {
   };
 
   const handleChangeCountry = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (currency.length) {
-      setCurrency('');
-    }
     if (showHint) {
       setShowHint(null);
     }
-    const country = countriesData.find((item) => item.code === e.target.value);
-    localStorage.setItem('selectedCountry', JSON.stringify(country || null));
-    setSelectedCountry(country || null);
+    const country =
+      countriesData.find((item) => item.code === e.target.value) || null;
+
+    setToStorage<Country | null>(STORAGE_KEYS.selectedCountry, country);
+    setSelectedCountry(country);
   };
 
   const handleChangeCurrency = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (showHint) {
-      setShowHint(null);
-    }
     if (e.target.value.length > CURRENCY_CODE_LENGTH) {
       return;
     }
+    if (showHint) {
+      setShowHint(null);
+    }
     if (e.target.value.length === CURRENCY_CODE_LENGTH) {
       validateCurrencyCode(e.target.value);
-      localStorage.setItem('currency', JSON.stringify(e.target.value));
+      setToStorage<string>(STORAGE_KEYS.currency, e.target.value);
     }
     setCurrency(e.target.value);
   };
@@ -96,4 +85,6 @@ export const ValidateCurrency = () => {
       </ErrorHint>
     </Wrapper>
   );
-};
+}
+
+export default CurrencyValidation;

@@ -1,24 +1,27 @@
 import React from 'react';
-import { Wrapper, Select } from './styles';
+import Select from './styles';
 import { Country, SelectProps } from '../types';
+import LabelComponent from '../../../components/Label/Label';
 
-export const SelectComponent: React.FC<SelectProps> = ({
+function SelectComponent({
   countriesData,
   handleChangeCountry,
   selectedCountry,
-}) => (
-  <Wrapper>
-    <label htmlFor="select-data">Select country:</label>
-    <Select
-      id="select-data"
-      onChange={handleChangeCountry}
-      value={selectedCountry?.code || ''}
-    >
-      {countriesData.map((country: Country, index) => (
-        <option disabled={!index} key={country.code} value={country.code}>
-          {country.name}
-        </option>
-      ))}
-    </Select>
-  </Wrapper>
-);
+}: SelectProps) {
+  return (
+    <LabelComponent label="Select country:">
+      <Select
+        id="select-data"
+        onChange={handleChangeCountry}
+        value={selectedCountry?.code || ''}
+      >
+        {countriesData.map((country: Country, index) => (
+          <option disabled={!index} key={country.code} value={country.code}>
+            {country.name}
+          </option>
+        ))}
+      </Select>
+    </LabelComponent>
+  );
+}
+export default SelectComponent;

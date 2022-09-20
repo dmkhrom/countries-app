@@ -5,13 +5,9 @@ import {
   DARK_MODE_KEY,
   LIGHT_MODE_KEY,
 } from '../../context/ThemeColorMode';
+import { MODES_NAMES } from '../../constants';
 
-const MODES_NAMES = {
-  darkMode: 'Dark',
-  lightMode: 'Light',
-};
-
-export const Switcher = () => {
+function Switcher() {
   const { colorMode, changeColorMode } = useThemeColorContext();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -36,6 +32,6 @@ export const Switcher = () => {
       <Switch />
     </Label>
   );
-};
+}
 
 export default Switcher;

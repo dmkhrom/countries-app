@@ -1,21 +1,24 @@
 import React, {
   createContext,
   ReactElement,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 import { DefaultTheme } from 'styled-components';
+import persistDataServices from '../services';
 import { darkTheme, lightTheme } from '../styles/Themes';
 
 interface ProviderProps {
   children: ReactElement;
 }
 
+export type ThemeModeList = 'darkMode' | 'lightMode';
+
 export const DARK_MODE_KEY: ThemeModeList = 'darkMode';
 export const LIGHT_MODE_KEY: ThemeModeList = 'lightMode';
-
-export type ThemeModeList = 'darkMode' | 'lightMode';
 
 export type SwitcherTypes = {
   changeColorMode: (colorMode: ThemeModeList) => void;
@@ -24,44 +27,46 @@ export type SwitcherTypes = {
 };
 
 const INITIAL_CONTEXT_VALUE = {
-  changeColorMode: () => {},
+  changeColorMode: () => null,
   colorMode: LIGHT_MODE_KEY,
   theme: lightTheme,
 };
 
 const ThemeColorContext = createContext<SwitcherTypes>(INITIAL_CONTEXT_VALUE);
 
-const ThemeModeProvider = ({ children }: ProviderProps) => {
-  const getInitialValue = () => {
-    const storageValue = localStorage.getItem('theme');
+function ThemeModeProvider({ children }: ProviderProps) {
+  const { setToStorage, getStorageValue } = persistDataServices();
 
-    if (storageValue) {
-      return JSON.parse(storageValue);
-    } else {
-      return LIGHT_MODE_KEY;
-    }
-  };
-
-  const [colorMode, setColorMode] = useState<ThemeModeList>(getInitialValue());
+  const [colorMode, setColorMode] = useState<ThemeModeList>(
+    getStorageValue<ThemeModeList>('theme', LIGHT_MODE_KEY),
+  );
   const [theme, setTheme] = useState<DefaultTheme>(lightTheme);
 
   useEffect(() => {
     setTheme(colorMode === LIGHT_MODE_KEY ? lightTheme : darkTheme);
   }, [colorMode]);
 
-  const changeColorMode = (colorMode: ThemeModeList) => {
-    localStorage.setItem('theme', JSON.stringify(colorMode));
-    setColorMode(colorMode);
-  };
+  const changeColorMode = useCallback(
+    (mode: ThemeModeList) => {
+      setToStorage<ThemeModeList>('theme', mode);
+      setColorMode(mode);
+    },
+    [setColorMode, setToStorage],
+  );
+
+  const themeColorProviderValue = useMemo(
+    () => ({ theme, colorMode, changeColorMode }),
+    [theme, colorMode, changeColorMode],
+  );
 
   return (
     <div>
-      <ThemeColorContext.Provider value={{ theme, colorMode, changeColorMode }}>
+      <ThemeColorContext.Provider value={themeColorProviderValue}>
         {children}
       </ThemeColorContext.Provider>
     </div>
   );
-};
+}
 
 const useThemeColorContext = () => useContext(ThemeColorContext);
 

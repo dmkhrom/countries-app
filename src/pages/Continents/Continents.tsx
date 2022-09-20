@@ -2,8 +2,10 @@ import { useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { CONTINENTS_QUERY } from '../../graphql/queries';
 import { CountriesList, CountryTile, Wrapper } from './styles';
-import { SelectComponent } from './Select/Select';
+import SelectComponent from './Select/Select';
 import { Continent, ContinentsData, Country } from './types';
+import persistDataServices from '../../services';
+import { STORAGE_KEYS } from '../../constants';
 
 const DEFAULT_VALUE = {
   code: '',
@@ -11,32 +13,21 @@ const DEFAULT_VALUE = {
   countries: [],
 };
 
-export const Continents = () => {
-  const getInitialValue = () => {
-    const storageValue = localStorage.getItem('selectedContinent');
+function Continents() {
+  const { setToStorage, getStorageValue } = persistDataServices();
 
-    if (storageValue) {
-      return JSON.parse(storageValue);
-    } else {
-      return null;
-    }
-  };
   const [selectedContinent, setSelectedContinent] = useState<Continent | null>(
-    getInitialValue(),
+    getStorageValue<Continent | null>('selectedContinent', null),
   );
   const [continentsData, setContinentsData] = useState<Array<Continent>>([]);
 
   const { data } = useQuery<ContinentsData>(CONTINENTS_QUERY);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const continent = continentsData.find(
-      (item) => item.code === e.target.value,
-    );
-    localStorage.setItem(
-      'selectedContinent',
-      JSON.stringify(continent || null),
-    );
-    setSelectedContinent(continent || null);
+    const continent =
+      continentsData.find((item) => item.code === e.target.value) || null;
+    setToStorage<Continent | null>(STORAGE_KEYS.selectedContinent, continent);
+    setSelectedContinent(continent);
   };
 
   useEffect(() => {
@@ -59,4 +50,6 @@ export const Continents = () => {
       </CountriesList>
     </Wrapper>
   );
-};
+}
+
+export default Continents;

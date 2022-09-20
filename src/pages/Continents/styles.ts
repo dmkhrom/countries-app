@@ -11,6 +11,7 @@ export const CountriesList = styled.div`
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  margin-top: 100px;
 `;
 
 export const CountryTile = styled.div`

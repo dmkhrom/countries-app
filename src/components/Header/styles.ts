@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -11,3 +11,5 @@ export const Wrapper = styled.div`
     flex-direction: column-reverse;
   }
 `;
+
+export default Wrapper;

@@ -6,15 +6,37 @@ const prettierOptions = JSON.parse(
 );
 
 module.exports = {
-  extends: ['react-app', 'plugin:jsx-a11y/recommended', 'prettier'],
+  extends: ['react-app', 'airbnb', 'plugin:jsx-a11y/recommended', 'prettier'],
   plugins: ['jsx-a11y', 'prettier'],
+  overrides: [
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      extends: [
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+      ],
+    },
+  ],
   rules: {
+    'import/extensions': [
+      'error',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+      },
+    ],
     'prettier/prettier': ['error', prettierOptions],
     'no-console': 'error',
-    'react/jsx-filename-extension': [
-      1,
-      { extensions: ['.js', '.jsx', '.tsx', '.ts'] },
-    ],
-    'import/prefer-default-export': 0,
+    'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        paths: ['.'],
+      },
+    },
   },
 };

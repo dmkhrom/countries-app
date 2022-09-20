@@ -14,8 +14,19 @@ export const HINTS = {
   confirmed: {
     show: true,
     type: 'confirmed',
-    text: 'You are right',
+    text: 'Right currency code',
   },
 };
 
 export const CURRENCY_CODE_LENGTH = 3;
+
+export const STORAGE_KEYS = {
+  selectedCountry: 'selectedCountry',
+  currency: 'currency',
+  selectedContinent: 'selectedContinent',
+};
+
+export const MODES_NAMES = {
+  darkMode: 'Dark',
+  lightMode: 'Light',
+};

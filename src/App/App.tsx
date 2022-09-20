@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import { Container } from './styles';
-import { Header } from '../components/Header/Header';
-import { Router } from '../router';
-import { BrowserRouter, useLocation } from 'react-router-dom';
-import GlobalStyle from '../globalStyles';
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { useThemeColorContext } from '../context/ThemeColorMode';
 import { ApolloProvider } from '@apollo/client';
+import Container from './styles';
+import { Router } from '../router';
+import GlobalStyle from '../globalStyles';
+import { useThemeColorContext } from '../context/ThemeColorMode';
 import client from '../graphql/client';
+import Header from '../components/Header/Header';
 
-const App = () => {
+function App() {
   const { theme } = useThemeColorContext();
   return (
     <ApolloProvider client={client}>
@@ -24,6 +24,6 @@ const App = () => {
       </ThemeProvider>
     </ApolloProvider>
   );
-};
+}
 
 export default App;

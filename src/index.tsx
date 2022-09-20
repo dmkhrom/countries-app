@@ -9,7 +9,6 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    {/* eslint-disable-next-line react/jsx-no-undef */}
     <ThemeModeProvider>
       <App />
     </ThemeModeProvider>

@@ -1,5 +1,10 @@
 import React from 'react';
 
+export interface Country {
+  code: string;
+  name: string;
+}
+
 export interface Continent {
   code: string;
   name: string;
@@ -8,11 +13,6 @@ export interface Continent {
 
 export interface ContinentsData {
   continents: Continent[];
-}
-
-export interface Country {
-  code: string;
-  name: string;
 }
 
 export type SelectProps = {
