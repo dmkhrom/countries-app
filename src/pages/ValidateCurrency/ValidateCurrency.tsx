@@ -16,10 +16,10 @@ import persistDataServices from '../../services';
 function CurrencyValidation() {
   const { setToStorage, getStorageValue } = persistDataServices();
 
+  const [countriesData, setCountriesData] = useState<Array<Country>>([]);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(
     getStorageValue<Country | null>(STORAGE_KEYS.selectedCountry, null),
   );
-  const [countriesData, setCountriesData] = useState<Array<Country>>([]);
   const [currency, setCurrency] = useState<string>(
     getStorageValue<string>(STORAGE_KEYS.currency, ''),
   );
