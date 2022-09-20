@@ -4,7 +4,6 @@ import { CONTINENTS_QUERY } from '../../graphql/queries';
 import { CountriesList, CountryTile, Wrapper } from './styles';
 import { SelectComponent } from './Select/Select';
 import { Continent, ContinentsData, Country } from './types';
-import { LIGHT_MODE_KEY } from '../../context/ThemeColorMode';
 
 const DEFAULT_VALUE = {
   code: '',

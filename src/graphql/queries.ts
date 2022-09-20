@@ -11,14 +11,14 @@ export const CONTINENTS_QUERY = gql`
     }
   }
 `;
-
-export const COUNTRIES_QUERY = gql`
-  query Counties($code: String) {
-    countries(filter: { continent: { eq: $code } }) {
-      countries {
-        name
-        code
-      }
-    }
-  }
-`;
+//
+// export const COUNTRIES_QUERY = gql`
+//   query Counties($code: String) {
+//     countries(filter: { continent: { eq: $code } }) {
+//       countries {
+//         name
+//         code
+//       }
+//     }
+//   }
+// `;
