@@ -5,6 +5,7 @@ export const Label = styled.label`
   gap: 10px;
   cursor: pointer;
   color: ${({ theme }) => theme.text};
+  align-items: center;
 `;
 
 export const Switch = styled.div`

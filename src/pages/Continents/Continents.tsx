@@ -40,8 +40,8 @@ function Continents() {
         placeholder="Select continent"
       />
       <CountriesList>
-        {selectedContinent?.countries.map(({ name, code }: Country) => (
-          <CountryTile key={code}>{name}</CountryTile>
+        {selectedContinent?.countries.map(({ name }: Country) => (
+          <CountryTile key={name}>{name}</CountryTile>
         ))}
       </CountriesList>
     </Wrapper>
