@@ -1,5 +1,3 @@
-import React from 'react';
-
 export interface Country {
   code: string;
   name: string;
@@ -10,13 +8,12 @@ export interface CountriesData {
   countries: Country[];
 }
 
-export interface InputProps {
-  currency: string;
-  handleChangeCurrency: (currency: React.ChangeEvent<HTMLInputElement>) => void;
+export enum HintType {
+  confirmed = 'confirmed',
+  error = 'error',
 }
 
 export interface HintProps {
-  show: boolean;
-  type: string;
+  type: HintType;
   text?: string;
 }

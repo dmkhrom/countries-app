@@ -2,23 +2,16 @@ import { useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { COUNTRIES_QUERY } from '../../graphql/queries';
 import { ErrorHint, Wrapper } from './styles';
-import SelectComponent from '../../components/Select';
-import { CountriesData, Country, HintProps } from './types';
-import InputComponent from '../../components/Input';
+import Input from '../../components/Input';
+import Select from '../../components/Select';
+import { CountriesData, Country, HintType } from './types';
 import persistDataServices from '../../services';
 import { StorageKey } from '../../types';
 
-export const HINTS = {
-  error: {
-    show: true,
-    type: 'error',
-    text: 'Currency does not match the country selected. Please correct',
-  },
-  confirmed: {
-    show: true,
-    type: 'confirmed',
-    text: 'Right currency code',
-  },
+export const hintLabels = {
+  [HintType.error]:
+    'Currency does not match the country selected. Please correct',
+  [HintType.confirmed]: 'Right currency code',
 };
 
 export const CURRENCY_CODE_LENGTH = 3;
@@ -33,7 +26,7 @@ function CurrencyValidation() {
   const [currency, setCurrency] = useState<string>(
     getStorageValue<string>(StorageKey.currency, ''),
   );
-  const [showHint, setShowHint] = useState<HintProps | null>(null);
+  const [hint, setHint] = useState<HintType | null>(null);
 
   const { data } = useQuery<CountriesData>(COUNTRIES_QUERY);
 
@@ -48,52 +41,57 @@ function CurrencyValidation() {
       selectedCountry &&
       value.toLowerCase() !== selectedCountry.currency.toLowerCase()
     ) {
-      setShowHint(HINTS.error);
+      setHint(HintType.error);
     } else {
-      setShowHint(HINTS.confirmed);
+      setHint(HintType.confirmed);
     }
   };
 
-  const handleChangeCountry = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    if (showHint) {
-      setShowHint(null);
+  const handleChangeCountry = ({
+    target,
+  }: React.ChangeEvent<HTMLSelectElement>) => {
+    if (hint) {
+      setHint(null);
     }
     const country =
-      countriesData.find(({ code }) => code === e.target.value) || null;
+      countriesData.find(({ code }) => code === target.value) || null;
 
     setToStorage<Country | null>(StorageKey.selectedCountry, country);
     setSelectedCountry(country);
   };
 
-  const handleChangeCurrency = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > CURRENCY_CODE_LENGTH) {
+  const handleChangeCurrency = ({
+    target,
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    if (target.value.length > CURRENCY_CODE_LENGTH) {
       return;
     }
-    if (showHint) {
-      setShowHint(null);
+    if (hint) {
+      setHint(null);
     }
-    if (e.target.value.length === CURRENCY_CODE_LENGTH) {
-      validateCurrencyCode(e.target.value);
-      setToStorage<string>(StorageKey.currency, e.target.value);
+    if (target.value.length === CURRENCY_CODE_LENGTH) {
+      validateCurrencyCode(target.value);
+      setToStorage<string>(StorageKey.currency, target.value);
     }
-    setCurrency(e.target.value);
+    setCurrency(target.value);
   };
 
   return (
     <Wrapper>
-      <SelectComponent
-        optionsData={countriesData}
-        handleChange={handleChangeCountry}
-        selectedItem={selectedCountry}
+      <Select<Country>
+        options={countriesData}
+        onChange={handleChangeCountry}
+        value={selectedCountry?.code}
+        label="Select country:"
         placeholder="Select country"
       />
-      <InputComponent
-        currency={currency}
-        handleChangeCurrency={handleChangeCurrency}
+      <Input
+        label="Enter currency code(3 symbols):"
+        placeholder="Input currency code"
+        value={currency}
+        onChange={handleChangeCurrency}
       />
-      <ErrorHint show={showHint?.show || null} type={showHint?.type || null}>
-        {showHint?.text}
-      </ErrorHint>
+      {hint && <ErrorHint type={hint}>{hintLabels[hint]}</ErrorHint>}
     </Wrapper>
   );
 }

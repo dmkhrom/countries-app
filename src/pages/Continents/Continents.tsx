@@ -5,7 +5,7 @@ import { CountriesList, CountryTile, Wrapper } from './styles';
 import { Continent, ContinentsData, Country } from './types';
 import persistDataServices from '../../services';
 import { StorageKey } from '../../types';
-import SelectComponent from '../../components/Select/Select';
+import Select from '../../components/Select';
 
 function Continents() {
   const { setToStorage, getStorageValue } = persistDataServices();
@@ -17,9 +17,9 @@ function Continents() {
 
   const { data } = useQuery<ContinentsData>(CONTINENTS_QUERY);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = ({ target }: React.ChangeEvent<HTMLSelectElement>) => {
     const continent =
-      continentsData.find(({ code }) => code === e.target.value) || null;
+      continentsData.find(({ code }) => code === target.value) || null;
     setToStorage<Continent | null>(StorageKey.selectedContinent, continent);
     setSelectedContinent(continent);
   };
@@ -32,10 +32,11 @@ function Continents() {
 
   return (
     <Wrapper>
-      <SelectComponent
-        optionsData={continentsData}
-        handleChange={handleChange}
-        selectedItem={selectedContinent}
+      <Select<Continent>
+        options={continentsData}
+        onChange={handleChange}
+        value={selectedContinent?.code}
+        label="Select continent:"
         placeholder="Select continent"
       />
       <CountriesList>

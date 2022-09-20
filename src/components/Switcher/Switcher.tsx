@@ -11,9 +11,9 @@ const colorThemeLabels = {
 function Switcher() {
   const { colorMode, changeColorMode } = useThemeColorContext();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     changeColorMode(
-      e.target.checked ? ThemeColorMode.light : ThemeColorMode.dark,
+      target.checked ? ThemeColorMode.light : ThemeColorMode.dark,
     );
   };
 
