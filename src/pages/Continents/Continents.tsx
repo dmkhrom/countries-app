@@ -54,7 +54,7 @@ export const Continents = () => {
       />
       <CountriesList>
         {selectedContinent?.countries.map((country: Country) => (
-          <CountryTile>{country.name}</CountryTile>
+          <CountryTile key={country.name}>{country.name}</CountryTile>
         ))}
       </CountriesList>
     </Wrapper>
