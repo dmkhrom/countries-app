@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container } from './styles';
 import { Header } from '../components/Header/Header';
 import { Router } from '../router';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 import GlobalStyle from '../globalStyles';
 import { ThemeProvider } from 'styled-components';
 import { useThemeColorContext } from '../context/ThemeColorMode';

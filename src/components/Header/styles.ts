@@ -7,4 +7,7 @@ export const Wrapper = styled.div`
   margin: 0 auto;
   padding: 20px 0;
   box-sizing: border-box;
+  @media (max-width: 640px) {
+    flex-direction: column-reverse;
+  }
 `;

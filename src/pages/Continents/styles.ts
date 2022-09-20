@@ -19,9 +19,9 @@ export const CountryTile = styled.div`
   align-items: center;
   padding: 10px;
   box-sizing: border-box;
-  background-color: #ffffff;
-  border: 1px solid #525252;
+  color: #2d2d2d;
+  background-color: ${(props) => props.theme.elementsBackground};
+  border: 1px solid ${(props) => props.theme.borderColor};
   border-radius: 5px;
-  font-weight: bold;
   font-size: 16px;
 `;

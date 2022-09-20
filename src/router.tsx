@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navigate, useRoutes } from 'react-router-dom';
 import { Continents } from './pages/Continents/Continents';
+import { ValidateCurrency } from './pages/ValidateCurrency/ValidateCurrency';
 
 export const NAVIGATION = [
   {
@@ -13,7 +14,7 @@ export const NAVIGATION = [
     path: '/continents',
   },
   {
-    element: <div>Check currency</div>,
+    element: <ValidateCurrency />,
     name: 'Check currency',
     path: '/validation',
   },

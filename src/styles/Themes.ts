@@ -1,17 +1,19 @@
 export const darkTheme = {
-  type: 'lightMode',
+  background: '#2a2a2c',
   body: '#e0e0e0',
+  borderColor: '#4d4d4d',
+  elementsBackground: '#f2f2f2',
   text: '#b7b7b7',
-  toggleBorder: '#FFF',
-  background: '#363537',
   toggleBackground: '#b4aeae',
+  type: 'lightMode',
 };
 
 export const lightTheme = {
-  type: 'darkMode',
-  body: '#353736',
-  text: '#2d2d2d',
-  toggleBorder: '#6B8096',
   background: '#e5e0e0',
+  body: '#353736',
+  borderColor: '#696969',
+  elementsBackground: '#ffffff',
+  text: '#2d2d2d',
   toggleBackground: '#363537',
+  type: 'darkMode',
 };

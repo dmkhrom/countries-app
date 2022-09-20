@@ -2,11 +2,12 @@ import 'styled-components';
 
 declare module 'styled-components' {
   export interface DefaultTheme {
-    type: string;
-    body: string;
-    text: string;
-    toggleBorder: string;
+    borderColor: string;
     background: string;
+    body: string;
+    elementsBackground: string;
+    text: string;
     toggleBackground: string;
+    type: string;
   }
 }

@@ -22,7 +22,7 @@ export const CustomLink = styled(NavLink)`
 
   &.active {
     opacity: 1;
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid ${(props) => props.theme.text};
     cursor: default;
   }
 `;

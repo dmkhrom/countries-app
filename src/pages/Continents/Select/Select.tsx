@@ -11,12 +11,11 @@ export const SelectComponent: React.FC<SelectProps> = ({
     <label htmlFor="select-data">Select continent:</label>
     <Select
       id="select-data"
-      placeholder={'SELECT CONTINENT'}
-      value={selectedContinent?.code}
+      value={selectedContinent?.code || ''}
       onChange={handleChange}
     >
-      {continentsData.map((continent: Continent) => (
-        <option key={continent.code} value={continent.code}>
+      {continentsData.map((continent: Continent, index) => (
+        <option disabled={!index} key={continent.code} value={continent.code}>
           {continent.name}
         </option>
       ))}
