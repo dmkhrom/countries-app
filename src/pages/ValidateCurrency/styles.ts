@@ -13,6 +13,6 @@ export const Wrapper = styled.div`
   max-width: 400px;
 `;
 
-export const ErrorHint = styled.span<HintProps>`
-  color: ${({ type }) => (type === 'error' ? 'red' : 'green')};
+export const Hint = styled.span<HintProps>`
+  color: ${({ type }) => (type === HintType.error ? 'red' : 'green')};
 `;

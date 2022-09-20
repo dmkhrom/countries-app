@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
 import { COUNTRIES_QUERY } from '../../graphql/queries';
-import { ErrorHint, Wrapper } from './styles';
+import { Hint, Wrapper } from './styles';
 import Input from '../../components/Input';
 import Select from '../../components/Select';
 import { CountriesData, Country, HintType } from './types';
@@ -91,7 +91,7 @@ function CurrencyValidation() {
         value={currency}
         onChange={handleChangeCurrency}
       />
-      {hint && <ErrorHint type={hint}>{hintLabels[hint]}</ErrorHint>}
+      {hint && <Hint type={hint}>{hintLabels[hint]}</Hint>}
     </Wrapper>
   );
 }
